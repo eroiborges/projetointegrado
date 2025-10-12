@@ -15,63 +15,64 @@
 - **Número de Registros**: 50.000 registros (50.001 linhas incluindo cabeçalho)
 - **Número de Características**: 27 colunas
 - **Tamanho do Arquivo**: ~15.4 MB
+- **Moeda de Referência**: USD (Dólares Americanos) para valores monetários
 
 ## Dicionário de Dados
 
 ### Variáveis de Identificação
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| `ID` | String | Identificador único do registro (formato: 0x160a, 0x160b, etc.) |
-| `Customer_ID` | String | Identificador único do cliente (formato: CUS_0xd40, etc.) |
-| `Name` | String | Nome do cliente |
-| `SSN` | String | Número de Seguro Social (com possíveis valores mascarados/corrompidos) |
+| `ID` | String | Identificação única de uma entrada no dataset |
+| `Customer_ID` | String | Identificação única de uma pessoa/cliente |
+| `Name` | String | Nome da pessoa |
+| `SSN` | String | Número de Seguro Social da pessoa |
 
-### Variáveis Demográficas
+### Variáveis Demográficas e Temporais
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| `Age` | Integer/String | Idade do cliente (alguns valores com sufixos como "24_") |
-| `Occupation` | String | Profissão do cliente (Scientist, Teacher, Engineer, etc.) |
-| `Month` | String | Mês de referência dos dados (September, October, November, December) |
+| `Month` | String | Mês do ano de referência dos dados |
+| `Age` | Integer | Idade da pessoa |
+| `Occupation` | String | Profissão da pessoa |
 
-### Variáveis Financeiras - Renda
+### Variáveis Financeiras - Renda e Investimentos
+| Campo | Tipo | Descrição | Unidade |
+|-------|------|-----------|---------|
+| `Annual_Income` | Float | Renda anual da pessoa | USD |
+| `Monthly_Inhand_Salary` | Float | Salário base mensal da pessoa | USD |
+| `Amount_invested_monthly` | Float | Valor mensal investido pelo cliente | USD |
+| `Monthly_Balance` | Float | Saldo mensal do cliente | USD |
+
+### Variáveis de Contas Bancárias e Cartões
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| `Annual_Income` | Float | Renda anual do cliente (em unidade monetária não especificada) |
-| `Monthly_Inhand_Salary` | Float | Salário líquido mensal |
-| `Amount_invested_monthly` | Float | Valor investido mensalmente |
-| `Monthly_Balance` | Float | Saldo mensal |
-
-### Variáveis de Contas e Cartões
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `Num_Bank_Accounts` | Integer | Número de contas bancárias |
-| `Num_Credit_Card` | Integer | Número de cartões de crédito |
-| `Interest_Rate` | Float | Taxa de juros |
-| `Changed_Credit_Limit` | Float | Alteração no limite de crédito |
-| `Num_Credit_Inquiries` | Float | Número de consultas de crédito |
+| `Num_Bank_Accounts` | Integer | Número de contas bancárias que a pessoa possui |
+| `Num_Credit_Card` | Integer | Número de outros cartões de crédito mantidos pela pessoa |
+| `Interest_Rate` | Float | Taxa de juros do cartão de crédito |
+| `Changed_Credit_Limit` | Float | Mudança percentual no limite do cartão de crédito |
+| `Num_Credit_Inquiries` | Integer | Número de consultas de cartão de crédito |
 
 ### Variáveis de Empréstimos
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `Num_of_Loan` | Integer | Número de empréstimos |
-| `Type_of_Loan` | String | Tipos de empréstimos (Auto Loan, Credit-Builder Loan, Personal Loan, Home Equity Loan) |
-| `Total_EMI_per_month` | Float | Total de EMI (Equated Monthly Installment) por mês |
+| Campo | Tipo | Descrição | Unidade |
+|-------|------|-----------|---------|
+| `Num_of_Loan` | Integer | Número de empréstimos obtidos do banco | - |
+| `Type_of_Loan` | String | Tipos de empréstimos obtidos pela pessoa | - |
+| `Total_EMI_per_month` | Float | Pagamentos EMI mensais | USD |
 
 ### Variáveis de Comportamento de Pagamento
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| `Delay_from_due_date` | Integer | Dias de atraso da data de vencimento |
-| `Num_of_Delayed_Payment` | Integer/String | Número de pagamentos atrasados (alguns valores com sufixos) |
-| `Payment_of_Min_Amount` | String | Se paga o valor mínimo (Yes/No) |
-| `Payment_Behaviour` | String | Comportamento de pagamento (Low_spent_Small_value_payments, High_spent_Medium_value_payments, etc.) |
+| `Delay_from_due_date` | Integer | Número médio de dias de atraso da data de pagamento |
+| `Num_of_Delayed_Payment` | Integer | Número médio de pagamentos atrasados por uma pessoa |
+| `Payment_of_Min_Amount` | String | Se apenas o valor mínimo foi pago pela pessoa (Yes/No) |
+| `Payment_Behaviour` | String | Comportamento de pagamento do cliente (em USD) |
 
 ### Variáveis de Histórico e Utilização de Crédito
-| Campo | Tipo | Descrição |
-|-------|------|-----------|
-| `Credit_Mix` | String | Mix de crédito (Good, Bad, Standard) |
-| `Outstanding_Debt` | Float | Dívida pendente |
-| `Credit_Utilization_Ratio` | Float | Taxa de utilização do crédito (em percentual) |
-| `Credit_History_Age` | String | Idade do histórico de crédito (formato: "X Years and Y Months") |
+| Campo | Tipo | Descrição | Unidade |
+|-------|------|-----------|---------|
+| `Credit_Mix` | String | Classificação da mistura de créditos | - |
+| `Outstanding_Debt` | Float | Dívida restante a ser paga | USD |
+| `Credit_Utilization_Ratio` | Float | Taxa de utilização do cartão de crédito | Percentual |
+| `Credit_History_Age` | String | Idade do histórico de crédito da pessoa | - |
 
 ## Problemas de Qualidade dos Dados Identificados
 
