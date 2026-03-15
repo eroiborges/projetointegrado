@@ -1,0 +1,712 @@
+# Dataset Open Finance — Quantum Finance (100 clientes)
+# Gerado com random.seed(42) — reproduzível
+#
+# Score de engajamento por produto (escala 1-7):
+#   1-2 : uso esporádico / baixo engajamento
+#   3-4 : uso moderado
+#   5-6 : uso intenso / produto principal do cliente
+#   7   : uso muito intenso (produto âncora)
+#
+# Ausência de produto no dict = cliente NÃO possui o produto
+#   → candidato para recomendação pelo SR
+#
+# Perfis representados (distribuição realista para fintech de crédito):
+#   Conservador       : 20 clientes — Conta + Poupança + Cartão
+#   Crédito Pessoal   : 25 clientes — foco em crédito pessoa física
+#   Crédito Consignado: 20 clientes — servidor público / aposentado
+#   Investidor        : 15 clientes — Renda Fixa + Variável
+#   Básico            : 10 clientes — 2-3 produtos, iniciante
+#   Misto             : 10 clientes — perfil diversificado
+#
+# Produtos disponíveis (7 total):
+#   - Conta Corrente
+#   - Cartão de Crédito
+#   - Poupança
+#   - Crédito Pessoal
+#   - Crédito Consignado
+#   - Renda Fixa
+#   - Renda Variável
+
+
+clientes = {
+    # [001] Perfil: Crédito Pessoal
+    'Ana': {
+        'Conta Corrente': 3,
+        'Cartão de Crédito': 5,
+        'Crédito Pessoal': 5,
+        'Crédito Consignado': 6,
+        'Poupança': 3
+    },
+    # [002] Perfil: Crédito Pessoal
+    'Marcos': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 4,
+        'Crédito Pessoal': 6,
+        'Poupança': 3
+    },
+    # [003] Perfil: Misto
+    'Pedro': {
+        'Conta Corrente': 3,
+        'Cartão de Crédito': 3,
+        'Renda Variável': 6,
+        'Crédito Pessoal': 5
+    },
+    # [004] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Claudia': {
+        'Conta Corrente': 4,
+        'Poupança': 3,
+        'Cartão de Crédito': 2
+    },
+    # [005] Perfil: Investidor (Renda Fixa/Variável)
+    'João': {
+        'Conta Corrente': 3,
+        'Renda Fixa': 7,
+        'Renda Variável': 3,
+        'Poupança': 2
+    },
+    # [006] Perfil: Crédito Consignado
+    'Maria': {
+        'Conta Corrente': 6,
+        'Crédito Consignado': 7,
+        'Cartão de Crédito': 4,
+        'Poupança': 2,
+        'Crédito Pessoal': 1
+    },
+    # [007] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Lucas': {
+        'Conta Corrente': 6,
+        'Poupança': 5,
+        'Cartão de Crédito': 2
+    },
+    # [008] Perfil: Investidor (Renda Fixa/Variável)
+    'Juliana': {
+        'Conta Corrente': 3,
+        'Renda Fixa': 7,
+        'Renda Variável': 3,
+        'Poupança': 3,
+        'Cartão de Crédito': 3
+    },
+    # [009] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Rafael': {
+        'Conta Corrente': 5,
+        'Poupança': 3,
+        'Cartão de Crédito': 4,
+        'Renda Fixa': 3
+    },
+    # [010] Perfil: Investidor (Renda Fixa/Variável)
+    'Fernanda': {
+        'Conta Corrente': 5,
+        'Renda Fixa': 5,
+        'Renda Variável': 4,
+        'Poupança': 2,
+        'Cartão de Crédito': 4
+    },
+    # [011] Perfil: Investidor (Renda Fixa/Variável)
+    'Bruno': {
+        'Conta Corrente': 5,
+        'Renda Fixa': 4,
+        'Renda Variável': 5,
+        'Poupança': 2
+    },
+    # [012] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Camila': {
+        'Conta Corrente': 6,
+        'Poupança': 5,
+        'Cartão de Crédito': 3
+    },
+    # [013] Perfil: Crédito Consignado
+    'Diego': {
+        'Conta Corrente': 3,
+        'Crédito Consignado': 5,
+        'Cartão de Crédito': 5,
+        'Poupança': 4,
+        'Crédito Pessoal': 2
+    },
+    # [014] Perfil: Crédito Consignado
+    'Leticia': {
+        'Conta Corrente': 6,
+        'Crédito Consignado': 7,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 4
+    },
+    # [015] Perfil: Investidor (Renda Fixa/Variável)
+    'Eduardo': {
+        'Conta Corrente': 3,
+        'Renda Fixa': 5,
+        'Renda Variável': 5,
+        'Poupança': 2,
+        'Cartão de Crédito': 4
+    },
+    # [016] Perfil: Crédito Consignado
+    'Patricia': {
+        'Conta Corrente': 5,
+        'Crédito Consignado': 6,
+        'Cartão de Crédito': 5
+    },
+    # [017] Perfil: Crédito Consignado
+    'Felipe': {
+        'Conta Corrente': 5,
+        'Crédito Consignado': 5,
+        'Cartão de Crédito': 3,
+        'Poupança': 2
+    },
+    # [018] Perfil: Misto
+    'Mariana': {
+        'Poupança': 6,
+        'Crédito Consignado': 3,
+        'Crédito Pessoal': 4
+    },
+    # [019] Perfil: Investidor (Renda Fixa/Variável)
+    'Gustavo': {
+        'Conta Corrente': 5,
+        'Renda Fixa': 7,
+        'Renda Variável': 4,
+        'Poupança': 3
+    },
+    # [020] Perfil: Crédito Pessoal
+    'Aline': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 4,
+        'Crédito Pessoal': 7,
+        'Crédito Consignado': 4
+    },
+    # [021] Perfil: Crédito Pessoal
+    'Henrique': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 5,
+        'Crédito Pessoal': 7,
+        'Crédito Consignado': 3,
+        'Poupança': 3
+    },
+    # [022] Perfil: Crédito Pessoal
+    'Beatriz': {
+        'Conta Corrente': 2,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 7,
+        'Crédito Consignado': 3
+    },
+    # [023] Perfil: Crédito Pessoal
+    'Leonardo': {
+        'Conta Corrente': 3,
+        'Cartão de Crédito': 6,
+        'Crédito Pessoal': 5,
+        'Crédito Consignado': 5
+    },
+    # [024] Perfil: Misto
+    'Carla': {
+        'Cartão de Crédito': 3,
+        'Poupança': 3,
+        'Crédito Consignado': 5
+    },
+    # [025] Perfil: Básico (2-3 produtos)
+    'Rodrigo': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 4
+    },
+    # [026] Perfil: Crédito Consignado
+    'Vanessa': {
+        'Conta Corrente': 6,
+        'Crédito Consignado': 5,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 3
+    },
+    # [027] Perfil: Básico (2-3 produtos)
+    'Thiago': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 3
+    },
+    # [028] Perfil: Crédito Pessoal
+    'Amanda': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 4,
+        'Crédito Pessoal': 5,
+        'Poupança': 3
+    },
+    # [029] Perfil: Básico (2-3 produtos)
+    'Vinicius': {
+        'Conta Corrente': 2,
+        'Cartão de Crédito': 3
+    },
+    # [030] Perfil: Crédito Pessoal
+    'Priscila': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 4,
+        'Crédito Pessoal': 4,
+        'Crédito Consignado': 3,
+        'Poupança': 1
+    },
+    # [031] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Gabriel': {
+        'Conta Corrente': 4,
+        'Poupança': 4,
+        'Cartão de Crédito': 5
+    },
+    # [032] Perfil: Crédito Consignado
+    'Carolina': {
+        'Conta Corrente': 4,
+        'Crédito Consignado': 7,
+        'Cartão de Crédito': 2,
+        'Poupança': 3,
+        'Crédito Pessoal': 3
+    },
+    # [033] Perfil: Crédito Consignado
+    'André': {
+        'Conta Corrente': 5,
+        'Crédito Consignado': 5,
+        'Cartão de Crédito': 4
+    },
+    # [034] Perfil: Crédito Consignado
+    'Renata': {
+        'Conta Corrente': 5,
+        'Crédito Consignado': 6,
+        'Cartão de Crédito': 4,
+        'Poupança': 2
+    },
+    # [035] Perfil: Investidor (Renda Fixa/Variável)
+    'Leandro': {
+        'Conta Corrente': 5,
+        'Renda Fixa': 4,
+        'Renda Variável': 3,
+        'Poupança': 3
+    },
+    # [036] Perfil: Crédito Pessoal
+    'Sabrina': {
+        'Conta Corrente': 4,
+        'Cartão de Crédito': 4,
+        'Crédito Pessoal': 6,
+        'Crédito Consignado': 4
+    },
+    # [037] Perfil: Misto
+    'Alexandre': {
+        'Renda Variável': 6,
+        'Conta Corrente': 4,
+        'Renda Fixa': 2,
+        'Poupança': 3,
+        'Crédito Consignado': 4
+    },
+    # [038] Perfil: Crédito Consignado
+    'Natalia': {
+        'Conta Corrente': 3,
+        'Crédito Consignado': 5,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 3
+    },
+    # [039] Perfil: Básico (2-3 produtos)
+    'Daniel': {
+        'Conta Corrente': 3,
+        'Cartão de Crédito': 3,
+        'Poupança': 2
+    },
+    # [040] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Larissa': {
+        'Conta Corrente': 4,
+        'Poupança': 3,
+        'Cartão de Crédito': 5,
+        'Renda Fixa': 1
+    },
+    # [041] Perfil: Crédito Pessoal
+    'Mateus': {
+        'Conta Corrente': 2,
+        'Cartão de Crédito': 5,
+        'Crédito Pessoal': 5,
+        'Crédito Consignado': 5
+    },
+    # [042] Perfil: Crédito Pessoal
+    'Isabela': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 6,
+        'Crédito Pessoal': 4,
+        'Poupança': 3
+    },
+    # [043] Perfil: Crédito Pessoal
+    'Ricardo': {
+        'Conta Corrente': 3,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 6,
+        'Crédito Consignado': 4
+    },
+    # [044] Perfil: Crédito Pessoal
+    'Tatiana': {
+        'Conta Corrente': 2,
+        'Cartão de Crédito': 5,
+        'Crédito Pessoal': 6,
+        'Crédito Consignado': 3,
+        'Poupança': 1
+    },
+    # [045] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Fábio': {
+        'Conta Corrente': 5,
+        'Poupança': 3,
+        'Cartão de Crédito': 4,
+        'Renda Fixa': 2
+    },
+    # [046] Perfil: Investidor (Renda Fixa/Variável)
+    'Daniela': {
+        'Conta Corrente': 5,
+        'Renda Fixa': 5,
+        'Renda Variável': 4,
+        'Poupança': 1,
+        'Cartão de Crédito': 2
+    },
+    # [047] Perfil: Crédito Consignado
+    'Marcelo': {
+        'Conta Corrente': 6,
+        'Crédito Consignado': 5,
+        'Cartão de Crédito': 3,
+        'Poupança': 3,
+        'Crédito Pessoal': 4
+    },
+    # [048] Perfil: Crédito Consignado
+    'Luciana': {
+        'Conta Corrente': 4,
+        'Crédito Consignado': 6,
+        'Cartão de Crédito': 3,
+        'Poupança': 2
+    },
+    # [049] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Roberto': {
+        'Conta Corrente': 4,
+        'Poupança': 6,
+        'Cartão de Crédito': 3
+    },
+    # [050] Perfil: Crédito Pessoal
+    'Simone': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 5,
+        'Crédito Pessoal': 6,
+        'Crédito Consignado': 4
+    },
+    # [051] Perfil: Misto
+    'Carlos': {
+        'Crédito Consignado': 4,
+        'Conta Corrente': 6,
+        'Renda Variável': 5,
+        'Poupança': 6
+    },
+    # [052] Perfil: Crédito Consignado
+    'Elaine': {
+        'Conta Corrente': 5,
+        'Crédito Consignado': 5,
+        'Cartão de Crédito': 2,
+        'Poupança': 3
+    },
+    # [053] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Paulo': {
+        'Conta Corrente': 6,
+        'Poupança': 3,
+        'Cartão de Crédito': 2,
+        'Renda Fixa': 2
+    },
+    # [054] Perfil: Crédito Consignado
+    'Adriana': {
+        'Conta Corrente': 5,
+        'Crédito Consignado': 6,
+        'Cartão de Crédito': 2
+    },
+    # [055] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Jorge': {
+        'Conta Corrente': 6,
+        'Poupança': 3,
+        'Cartão de Crédito': 5
+    },
+    # [056] Perfil: Crédito Pessoal
+    'Cristina': {
+        'Conta Corrente': 3,
+        'Cartão de Crédito': 5,
+        'Crédito Pessoal': 7,
+        'Poupança': 2
+    },
+    # [057] Perfil: Crédito Consignado
+    'Sérgio': {
+        'Conta Corrente': 5,
+        'Crédito Consignado': 7,
+        'Cartão de Crédito': 2,
+        'Poupança': 3
+    },
+    # [058] Perfil: Investidor (Renda Fixa/Variável)
+    'Mônica': {
+        'Conta Corrente': 5,
+        'Renda Fixa': 7,
+        'Renda Variável': 5,
+        'Poupança': 2,
+        'Cartão de Crédito': 4
+    },
+    # [059] Perfil: Crédito Pessoal
+    'Antônio': {
+        'Conta Corrente': 3,
+        'Cartão de Crédito': 4,
+        'Crédito Pessoal': 7,
+        'Crédito Consignado': 6,
+        'Poupança': 1
+    },
+    # [060] Perfil: Crédito Consignado
+    'Raquel': {
+        'Conta Corrente': 5,
+        'Crédito Consignado': 6,
+        'Cartão de Crédito': 2
+    },
+    # [061] Perfil: Crédito Pessoal
+    'Flávio': {
+        'Conta Corrente': 4,
+        'Cartão de Crédito': 6,
+        'Crédito Pessoal': 7,
+        'Crédito Consignado': 4
+    },
+    # [062] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Débora': {
+        'Conta Corrente': 5,
+        'Poupança': 3,
+        'Cartão de Crédito': 4,
+        'Renda Fixa': 3
+    },
+    # [063] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Maurício': {
+        'Conta Corrente': 6,
+        'Poupança': 3,
+        'Cartão de Crédito': 3,
+        'Renda Fixa': 1
+    },
+    # [064] Perfil: Investidor (Renda Fixa/Variável)
+    'Érica': {
+        'Conta Corrente': 3,
+        'Renda Fixa': 5,
+        'Renda Variável': 3,
+        'Poupança': 1
+    },
+    # [065] Perfil: Básico (2-3 produtos)
+    'Cláudio': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 1
+    },
+    # [066] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Viviane': {
+        'Conta Corrente': 5,
+        'Poupança': 6,
+        'Cartão de Crédito': 5
+    },
+    # [067] Perfil: Investidor (Renda Fixa/Variável)
+    'Rogério': {
+        'Conta Corrente': 3,
+        'Renda Fixa': 4,
+        'Renda Variável': 3,
+        'Poupança': 2
+    },
+    # [068] Perfil: Crédito Pessoal
+    'Andréia': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 5,
+        'Crédito Consignado': 3
+    },
+    # [069] Perfil: Misto
+    'Renato': {
+        'Conta Corrente': 5,
+        'Renda Fixa': 3,
+        'Cartão de Crédito': 5,
+        'Poupança': 5,
+        'Crédito Consignado': 4
+    },
+    # [070] Perfil: Crédito Pessoal
+    'Lívia': {
+        'Conta Corrente': 3,
+        'Cartão de Crédito': 5,
+        'Crédito Pessoal': 7,
+        'Crédito Consignado': 5
+    },
+    # [071] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Welton': {
+        'Conta Corrente': 6,
+        'Poupança': 4,
+        'Cartão de Crédito': 4
+    },
+    # [072] Perfil: Misto
+    'Bianca': {
+        'Poupança': 3,
+        'Crédito Pessoal': 3,
+        'Renda Fixa': 2,
+        'Renda Variável': 5,
+        'Cartão de Crédito': 5
+    },
+    # [073] Perfil: Crédito Consignado
+    'Willian': {
+        'Conta Corrente': 5,
+        'Crédito Consignado': 7,
+        'Cartão de Crédito': 5
+    },
+    # [074] Perfil: Misto
+    'Jéssica': {
+        'Renda Fixa': 2,
+        'Cartão de Crédito': 4,
+        'Poupança': 4,
+        'Conta Corrente': 5
+    },
+    # [075] Perfil: Crédito Consignado
+    'Douglas': {
+        'Conta Corrente': 6,
+        'Crédito Consignado': 7,
+        'Cartão de Crédito': 3
+    },
+    # [076] Perfil: Básico (2-3 produtos)
+    'Miriam': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 1
+    },
+    # [077] Perfil: Crédito Pessoal
+    'Cesar': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 4,
+        'Crédito Pessoal': 7,
+        'Crédito Consignado': 7
+    },
+    # [078] Perfil: Investidor (Renda Fixa/Variável)
+    'Giovanna': {
+        'Conta Corrente': 4,
+        'Renda Fixa': 4,
+        'Renda Variável': 3,
+        'Poupança': 3
+    },
+    # [079] Perfil: Básico (2-3 produtos)
+    'Elvis': {
+        'Conta Corrente': 5,
+        'Cartão de Crédito': 2
+    },
+    # [080] Perfil: Investidor (Renda Fixa/Variável)
+    'Sandra': {
+        'Conta Corrente': 4,
+        'Renda Fixa': 6,
+        'Renda Variável': 4,
+        'Poupança': 2
+    },
+    # [081] Perfil: Crédito Consignado
+    'Glauber': {
+        'Conta Corrente': 6,
+        'Crédito Consignado': 6,
+        'Cartão de Crédito': 5
+    },
+    # [082] Perfil: Crédito Pessoal
+    'Sueli': {
+        'Conta Corrente': 2,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 6
+    },
+    # [083] Perfil: Crédito Pessoal
+    'Nilson': {
+        'Conta Corrente': 2,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 5
+    },
+    # [084] Perfil: Básico (2-3 produtos)
+    'Rosangela': {
+        'Conta Corrente': 3,
+        'Cartão de Crédito': 2
+    },
+    # [085] Perfil: Misto
+    'Nelson': {
+        'Renda Variável': 3,
+        'Poupança': 6,
+        'Crédito Pessoal': 6,
+        'Cartão de Crédito': 2
+    },
+    # [086] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Neusa': {
+        'Conta Corrente': 5,
+        'Poupança': 5,
+        'Cartão de Crédito': 2,
+        'Renda Fixa': 2
+    },
+    # [087] Perfil: Crédito Consignado
+    'Osmar': {
+        'Conta Corrente': 6,
+        'Crédito Consignado': 6,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 2
+    },
+    # [088] Perfil: Investidor (Renda Fixa/Variável)
+    'Lúcia': {
+        'Conta Corrente': 3,
+        'Renda Fixa': 6,
+        'Renda Variável': 3,
+        'Poupança': 3,
+        'Cartão de Crédito': 3
+    },
+    # [089] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Valdivino': {
+        'Conta Corrente': 7,
+        'Poupança': 5,
+        'Cartão de Crédito': 2,
+        'Renda Fixa': 2
+    },
+    # [090] Perfil: Investidor (Renda Fixa/Variável)
+    'Terezinha': {
+        'Conta Corrente': 3,
+        'Renda Fixa': 7,
+        'Renda Variável': 6,
+        'Poupança': 1
+    },
+    # [091] Perfil: Básico (2-3 produtos)
+    'Kleber': {
+        'Conta Corrente': 4,
+        'Cartão de Crédito': 4,
+        'Poupança': 2
+    },
+    # [092] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Estela': {
+        'Conta Corrente': 5,
+        'Poupança': 5,
+        'Cartão de Crédito': 5
+    },
+    # [093] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Luan': {
+        'Conta Corrente': 6,
+        'Poupança': 5,
+        'Cartão de Crédito': 3,
+        'Renda Fixa': 1
+    },
+    # [094] Perfil: Crédito Pessoal
+    'Rebeca': {
+        'Conta Corrente': 4,
+        'Cartão de Crédito': 6,
+        'Crédito Pessoal': 5,
+        'Crédito Consignado': 7,
+        'Poupança': 2
+    },
+    # [095] Perfil: Crédito Pessoal
+    'Caio': {
+        'Conta Corrente': 4,
+        'Cartão de Crédito': 3,
+        'Crédito Pessoal': 7,
+        'Crédito Consignado': 4
+    },
+    # [096] Perfil: Crédito Pessoal
+    'Vitoria': {
+        'Conta Corrente': 4,
+        'Cartão de Crédito': 5,
+        'Crédito Pessoal': 6
+    },
+    # [097] Perfil: Misto
+    'Enzo': {
+        'Crédito Pessoal': 5,
+        'Renda Variável': 5,
+        'Renda Fixa': 6,
+        'Cartão de Crédito': 3,
+        'Conta Corrente': 5
+    },
+    # [098] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Manoela': {
+        'Conta Corrente': 7,
+        'Poupança': 6,
+        'Cartão de Crédito': 2
+    },
+    # [099] Perfil: Conservador (Poupança/Conta/Cartão)
+    'Arthur': {
+        'Conta Corrente': 5,
+        'Poupança': 6,
+        'Cartão de Crédito': 3
+    },
+    # [100] Perfil: Básico (2-3 produtos)
+    'Júlia': {
+        'Conta Corrente': 4,
+        'Cartão de Crédito': 4,
+        'Poupança': 2
+    }
+}
